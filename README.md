@@ -1,3 +1,12 @@
+# Screenshots
+
+## Screenshot of the application running in the browser.
+![assignment123](https://github.com/user-attachments/assets/d09dbed8-6435-425f-ad54-4cea995523f1)
+
+## Screenshot showing Nginx (or web server) access logs that confirm a successful request.
+![ass123](https://github.com/user-attachments/assets/08174270-ed34-4c0e-b488-6b22c36fbf2d)
+
+
 # Issues Identified and Resolution Steps
 
 During the setup and testing of the multi-container Docker environment, several issues were identified across different files, including misconfigurations and missing files. Here’s a detailed report on each issue encountered and the steps taken to resolve them, with specific file references and line changes.
