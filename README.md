@@ -1,88 +1,57 @@
-# DevOps Assignment: Debugging and Running a Dockerized Application
+# Issues Identified and Resolution Steps
 
-Welcome to your DevOps assignment! Your goal is to debug and deploy a Dockerized application. The steps below outline the tasks you’ll complete, including setup, debugging, running, testing, and submitting your work.
+During the setup and testing of the multi-container Docker environment, several issues were identified across different files, including misconfigurations and missing files. Here’s a detailed report on each issue encountered and the steps taken to resolve them, with specific file references and line changes.
 
-## Assignment Overview
+## docker-compose.yml
+### Issues:
+- Nginx was not correctly forwarding requests to the Flask application.
+- Port conflicts on port 80 due to permissions on the host system.
 
-In this assignment, you’ll:
-1. Set up Docker and Docker Compose.
-2. Build Docker images and launch containers.
-3. Debug and resolve intentional errors in the code to ensure the application runs correctly.
-4. Verify the application in your browser.
-5. Document your process and submit your work.
+### Resolution Steps:
+- **Update Port Mappings:** Changed the exposed Nginx port to 8080 instead of 80 to avoid permission conflicts.
+- **Network Configuration:** Ensured both services shared an internal network by defining the network in the docker-compose.yml file.
 
----
+## nginx.conf
+### Issues:
+- Nginx was not configured to forward requests to the Flask application running on port 8000.
+- The configuration file lacked a static file routing setup for testing direct access.
 
-## Requirements
+### Resolution Steps:
+- **Proxy Pass Configuration:** Added a reverse proxy configuration in nginx.conf to forward requests from Nginx (port 8080) to Flask (port 8000).
+- **Static File Routing:** Configured Nginx to serve static files from the html directory directly under the /static/ endpoint.
 
-**Tools Needed:**
-- **System:** Use any laptop, PC, or cloud server.
-- **Tools:** Docker and Docker Compose must be installed and configured.
+## index.html
+### Purpose:
+- index.html was added to the html folder to verify that Nginx can serve static content independently.
 
----
+## Python Dockerfile (python/Dockerfile)
+### Issues:
+- The Python Dockerfile was incomplete, lacking dependency installations and a properly exposed port.
 
-## Steps
+### Resolution Steps:
+- **Install Dependencies:** Added a RUN command to install dependencies from requirements.txt.
+- **Expose Port:** Exposed port 8000 for internal communication within the Docker network.
+- **CMD Instruction:** Set the command to run app.py using Flask.
 
-### 1. Initial Setup
-1. **Clone the GitHub Repository:**
-   - Start by cloning the provided GitHub repository, which contains the `Dockerfiles`, `docker-compose.yml` file, and the application code.
-   
-2. **Build Docker Images:**
-   - Build each Docker image locally using the provided Dockerfiles.
-   - Tag each image appropriately to be referenced by the `docker-compose.yml` file.
+## Nginx Dockerfile (nginx/Dockerfile)
+### Purpose:
+- The Nginx Dockerfile was set up to include a custom nginx.conf and copy static files.
 
-### 2. Running the Docker Compose File
-1. **Start the Containers:**
-   - Use the provided `docker-compose.yml` file to launch all containers.
-   - **Note:** There are intentional errors in the code. Part of your assignment is to identify and fix these errors so the application runs correctly.
+### Resolution Steps:
+- **Copy Configuration:** Replaced the default Nginx configuration with nginx.conf.
+- **Copy Static Files:** Added a command to copy index.html from the html folder.
 
-### 3. Debugging and Testing
-1. **Identify Issues:**
-   - Check the logs for any errors while building and running containers.
-   - Examine the application code, Dockerfiles, and `docker-compose.yml` file to identify intentional errors.
+## app.py (Python Flask Application)
+### Issues:
+- Minor adjustments were required to set the host and port properly for Docker deployment.
 
-2. **Resolve Errors:**
-   - Document the issues and explain your debugging steps.
-   - Apply necessary changes to the code, Dockerfiles, or configuration to resolve these errors.
+### Resolution Steps:
+- **Set Host and Port:** Configured Flask to run on 0.0.0.0 (allowing all incoming connections) and port 8000.
 
-3. **Verify Website Access:**
-   - Open a web browser and access the application on `http://localhost` (or `http://<server-IP>` if hosted on a cloud server) to confirm it is running correctly.
-   - Check Nginx or other web server logs to confirm requests are being logged as expected.
-
-### 4. Submitting the Assignment
-1. **GitHub Repository:**
-   - Create a new GitHub repository and name it in this format: `devops-qoala-assignment-<name>-<rollnumber>`.
-   - Upload all relevant files (including the modified code, Dockerfiles, `docker-compose.yml`, and other configurations) to this repository.
-   - Grant access to `devops@qoala.id`. **Note:** Submissions without access granted will not be considered.
-
-2. **Screenshots:**
-   - Take a screenshot of the application running in the browser.
-   - Include a screenshot showing Nginx (or web server) access logs that confirm a successful request.
-
-3. **Report:**
-   - Write a concise, one-page report that includes:
-     - **Issues Identified:** Summarize any errors encountered during image building, container setup, or application testing.
-     - **Resolution Steps:** Describe each action taken to resolve the issues and ensure the application runs correctly.
-
----
-
-## Bonus Points
-
-### Cloud Deployment
-- For extra credit, deploy the application on a cloud server (AWS, GCP, or Azure) and provide an accessible endpoint, such as an IP address or DNS record.
-- This will allow your work to be verified through the shared endpoint.
-
----
-
-## Summary Checklist
-- Set up Docker and Docker Compose.
-- Clone and build Docker images.
-- Debug and fix issues in code, Dockerfiles, or `docker-compose.yml`.
-- Start containers and verify application accessibility on port 80.
-- Upload files to a new GitHub repository and grant access to `devops@qoala.id`.
-- Submit screenshots and a concise report of issues and solutions.
-- (Bonus) Deploy on a cloud provider and share endpoint details.
-
----
-
-Good luck, and happy debugging!
+## Summary of Changes
+The following adjustments resolved all issues and ensured the multi-container setup worked as expected:
+- **docker-compose.yml:** Adjusted port mappings and added network configuration.
+- **nginx.conf:** Configured proxy pass and static file routing.
+- **index.html:** Added for static content testing, accessible at /static/index.html.
+- **Python Dockerfile:** Completed the setup with dependencies, exposed ports, and run command.
+- **Nginx Dockerfile:** Added custom configuration and static file serving setup.
