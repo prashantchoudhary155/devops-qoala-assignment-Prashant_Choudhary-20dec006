@@ -1,12 +1,10 @@
-version: '3.8'
-
 services:
   nginx:
     image: local-nginx
     ports:
-      - "eighty:80"
+      - "8080:80"  # Changed from "80:80" to "8080:80"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.confi
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     networks:
       - nginx-network
 
@@ -14,12 +12,10 @@ services:
     image: local-python-app
     container_name: python_app
     expose:
-      - "eight thousand"
+      - "8000"
     networks:
       - nginx-network
 
 networks:
   nginx-network:
-    driver: bridg
-    options:
-      compelex_option: value
+    driver: bridge
