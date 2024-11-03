@@ -7,6 +7,7 @@
 ![ass123](https://github.com/user-attachments/assets/08174270-ed34-4c0e-b488-6b22c36fbf2d)
 
 
+
 # Issues Identified and Resolution Steps
 
 During the setup and testing of the multi-container Docker environment, several issues were identified across different files, including misconfigurations and missing files. Here’s a detailed report on each issue encountered and the steps taken to resolve them, with specific file references and line changes.
@@ -57,7 +58,9 @@ During the setup and testing of the multi-container Docker environment, several 
 ### Resolution Steps:
 - **Set Host and Port:** Configured Flask to run on 0.0.0.0 (allowing all incoming connections) and port 8000.
 
-## Summary of Changes
+
+
+# Summary of Changes
 The following adjustments resolved all issues and ensured the multi-container setup worked as expected:
 - **docker-compose.yml:** Adjusted port mappings and added network configuration.
 - **nginx.conf:** Configured proxy pass and static file routing.
