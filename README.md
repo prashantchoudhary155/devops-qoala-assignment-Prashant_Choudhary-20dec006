@@ -1,7 +1,8 @@
 # Screenshots
 
 ## Screenshot of the application running in the browser.
-![assignment123](https://github.com/user-attachments/assets/d09dbed8-6435-425f-ad54-4cea995523f1)
+![pp](https://github.com/user-attachments/assets/5fc0d894-7af4-4ae4-b85a-0c5e69ba1d33)
+
 
 ## Screenshot showing Nginx (or web server) access logs that confirm a successful request.
 ![ass123](https://github.com/user-attachments/assets/08174270-ed34-4c0e-b488-6b22c36fbf2d)
